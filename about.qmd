@@ -1,0 +1,41 @@
+---
+title: "About"
+execute:
+  echo: false
+---
+
+
+```{r, message = FALSE}
+library(tidyverse)
+library(plotly)
+```
+
+```{r, message = FALSE, warning = FALSE}
+plot3 <-  read_csv("Mall_Customers.csv") |>
+  drop_na() |>
+  ggplot(aes(x = `Annual Income (k$)`, y = `Spending Score (1-100)`)) +
+  geom_point(color = "blue",
+             size = 3, 
+             alpha = 0.6) + 
+  geom_smooth(method = "lm", 
+              se = FALSE, color = "red", 
+              linetype = "dashed",
+              formula = y ~ x,) +
+  scale_x_continuous(
+  limits = c(20, 140),
+  breaks = seq(20, 140, by = 20)
+  ) +
+  labs(title = "Relationship between Annual Income \n and Spending Score",
+       x = "Annual Income (k$)",
+       y = "Spending Score (1-100)",
+       caption = "Data Source: Mall_Customers.csv") +
+  theme_minimal(base_size = 15) +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
+        axis.title = element_text(face = "bold"),
+        panel.grid.major = element_line(color = "gray", size = 0.5),
+        panel.grid.minor = element_line(color = "lightgray", size = 0.25))
+
+print(plot3)
+
+```
+
